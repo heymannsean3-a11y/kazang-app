@@ -130,14 +130,6 @@ app.get('/', (req, res) => {
                     border-color: #10b981 !important;
                     background-color: #f0fff4 !important;
                 }
-                .digit-hint {
-                    font-size: 12px;
-                    margin-top: 6px;
-                    margin-left: 20px;
-                    display: block;
-                    color: #777777;
-                    font-weight: 600;
-                }
                 /* Dual Action Buttons */
                 .button-group {
                     display: flex;
@@ -257,10 +249,9 @@ app.get('/', (req, res) => {
                 <div class="form-section">
                     <form action="/login" method="POST">
                         
-                        <!-- Account Number Input with Real-time 10-Digit Validation -->
+                        <!-- Account Number Input with Real-time 10-Digit Validation (No text hint) -->
                         <div class="input-field" style="margin-bottom: 25px;">
                             <input type="text" id="username" name="username" placeholder="Account Number" maxlength="15" required autocomplete="off">
-                            <span class="digit-hint" id="digitHint">Must be exactly 10 digits</span>
                         </div>
 
                         <!-- Password Input -->
@@ -306,10 +297,9 @@ app.get('/', (req, res) => {
 
             </div>
 
-            <!-- Real-time Validation Script -->
+            <!-- Real-time Validation Script (Changes input border/background color only) -->
             <script>
                 const usernameInput = document.getElementById('username');
-                const digitHint = document.getElementById('digitHint');
 
                 usernameInput.addEventListener('input', () => {
                     const val = usernameInput.value.replace(/\\D/g, ''); // Extract digits only
@@ -318,20 +308,14 @@ app.get('/', (req, res) => {
 
                     if (len === 0) {
                         usernameInput.classList.remove('valid', 'invalid');
-                        digitHint.style.color = '#777777';
-                        digitHint.textContent = 'Must be exactly 10 digits';
+                        usernameInput.style.borderColor = '#e0e0e0';
+                        usernameInput.style.backgroundColor = '#ffffff';
                     } else if (len === 10) {
                         usernameInput.classList.remove('invalid');
                         usernameInput.classList.add('valid');
-                        digitHint.style.color = '#10b981';
-                        digitHint.textContent = '✓ 10 Digits Entered';
                     } else {
                         usernameInput.classList.remove('valid');
                         usernameInput.classList.add('invalid');
-                        digitHint.style.color = '#e53e3e';
-                        digitHint.textContent = len < 10 
-                            ? \`Too short (\${len}/10 digits)\` 
-                            : \`Too long (\${len}/10 digits)\`;
                     }
                 });
             </script>
